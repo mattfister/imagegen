@@ -21,6 +21,12 @@ def height(x, y):
     result = (result-min)/scale
     return result
 
+def water_value(x, y, height, max_height):
+    result = height + 0.5*math.fabs(simp1.noise2(x*50, y*50))
+    result = result / (max_height + 0.5)
+    print(result)
+    return result
+
 if __name__ == '__main__':
     w = 880
     h = 440
@@ -36,10 +42,10 @@ if __name__ == '__main__':
 
     for y in range(h):
         for x in range(w):
-            v = normalizer.normalize(height(x/w,y/h), 0.2, 1.0)
-            s = math.fabs(ssimp.noise2(x/w, y/w))
+            v = normalizer.normalize(height(x/w,y/h), 0.0, 1.0)
+
             if v < 0.4:
-                img.set_pixel(x, y, colorsys.hsv_to_rgb(water_c[0], water_c[1], v))
+                img.set_pixel(x, y, colorsys.hsv_to_rgb(water_c[0], water_c[1], water_value(x/w, y/h, v, 0.4)))
             else:
-                img.set_pixel(x, y, colorsys.hsv_to_rgb(land_c[0], s, v))
+                img.set_pixel(x, y, colorsys.hsv_to_rgb(land_c[0], land_c[1], v))
     img.show()
