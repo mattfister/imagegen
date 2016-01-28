@@ -24,7 +24,6 @@ def height(x, y):
 def water_value(x, y, height, max_height):
     result = height + 0.5*math.fabs(simp1.noise2(x*50, y*50))
     result = result / (max_height + 0.5)
-    print(result)
     return result
 
 if __name__ == '__main__':
